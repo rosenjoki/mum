@@ -517,52 +517,6 @@ for (let i = 0; i < 18; i++) {
   container.appendChild(h);
 }
 
-// === Scroll Reveal ===
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
 
-document.querySelectorAll('section, .photo-frame').forEach(el => observer.observe(el));
-
-// === Music Player (YouTube embed approach) ===
-let ytPlayer = null;
-let playing = false;
-const btn = document.getElementById('music-btn');
-
-// Load YouTube IFrame API
-const tag = document.createElement('script');
-tag.src = 'https://www.youtube.com/iframe_api';
-document.head.appendChild(tag);
-
-let ytReady = false;
-window.onYouTubeIframeAPIReady = function() {
-  ytReady = true;
-  // Hidden player
-  const div = document.createElement('div');
-  div.id = 'yt-hidden';
-  div.style.cssText = 'position:fixed;bottom:-200px;left:-200px;width:1px;height:1px;';
-  document.body.appendChild(div);
-  ytPlayer = new YT.Player('yt-hidden', {
-    videoId: 'v9GR0RdExRY',
-    playerVars: { autoplay: 0, loop: 1, playlist: 'v9GR0RdExRY' },
-    events: {}
-  });
-};
-
-btn.addEventListener('click', () => {
-  if (!ytReady || !ytPlayer) return;
-  if (!playing) {
-    ytPlayer.playVideo();
-    btn.textContent = '⏸';
-    btn.classList.add('playing');
-    playing = true;
-  } else {
-    ytPlayer.pauseVideo();
-    btn.textContent = '🎵';
-    btn.classList.remove('playing');
-    playing = false;
-  }
-});
-</script>
 </body>
 </html>
